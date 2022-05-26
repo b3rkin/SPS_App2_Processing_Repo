@@ -31,7 +31,7 @@ if pmfcreate:
 
     for i in range(1,cell_number+1):
         dir = os.path.join(parentDirectory, "Processing/raw_data/all_training_data", "saved_data_cell" + str(i) + "_totall.txt")
-        create_pmf(dir,i)
+        creatd_ape_pmf(dir,i)
     
 
 if addMissing:

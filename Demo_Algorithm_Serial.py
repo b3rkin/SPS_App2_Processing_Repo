@@ -92,7 +92,7 @@ parentDirectory = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
 days = ['Friday', 'Wednesday']
 day = days[1]
 date = "may25"
-dirList = ["random1", "random2", "random3", "random4", "random5"][:-2]
+dirList = ["random1", "random2", "random3", "random4", "random5"][:]
 # dirList = ["South", "East", "North", "West"]
 cell_number = 15
 # Initialize arrays to hold test results
