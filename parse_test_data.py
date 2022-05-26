@@ -20,8 +20,8 @@ if (len(os.listdir(splitPath))!=0):
     
 
 for dir in dirList:
-    for i in range(cellNumber+1):
-        parsePath = os.path.join(filePath,"concat_test_data","testDatatest" + str(cellNumber) + "_Wednesday_" + dir + ".txt")
+    for i in range(1,cellNumber+1):
+        parsePath = os.path.join(filePath,"concat_test_data","testDatatest" + str(i) + "_Wednesday_" + dir + ".txt")
 
         with open(parsePath,'r') as file:
             lines = file.readlines()
@@ -43,11 +43,13 @@ for dir in dirList:
                     dirsave = "West"
                 if dir == "e":
                     dirsave = "East"
-                savePath = os.path.join(filePath,"split_test_data","saved_data_celltest" + str(i + 1) + "_Wednesday_" + dirsave + "_" + str(measurement) + ".txt")
+
+                savePath = os.path.join(filePath,"split_test_data","saved_data_celltest" + str(i) + "_Wednesday_" + dirsave + "_" + str(measurement) + ".txt")
                 with open(savePath,"w") as save:
                     save.writelines(lines[countBegin:countEnd-1])
                 cleanup_csv(savePath)
                 measurement += 1
+                countBegin = countEnd
                 if measurement == 4:
                     break
-                countBegin = countEnd
+                
