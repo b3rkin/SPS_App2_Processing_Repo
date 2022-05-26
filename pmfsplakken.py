@@ -34,9 +34,11 @@ for idx, d_ap in enumerate(distinct_ap_list):
                     for j in range(1,df1.shape[1]): #iterate over columns
                         df1.iloc[i,j] += df2.iloc[i, j] #get cell value
                 counter += 1
+
     for i in range(df1.shape[0]): #iterate over rows
         for j in range(1,df1.shape[1]): #iterate over columns
-            df1.iloc[i,j] += (df1.iloc[i, j]/counter)#get cell value       
+            df1.iloc[i,j] = (df1.iloc[i, j]/counter)#get cell value       
+
     counter = 0
     df1.to_csv('newpmfs/'+d_ap+'.csv', index=False, header= None)
     flag = 1

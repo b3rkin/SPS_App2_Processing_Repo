@@ -8,19 +8,20 @@ from distutils.dir_util import copy_tree
 import glob
 
 def filterMultipleMACs(data_dir):
-    """This function takes a test measurement file and filters out the common mac addresses (based on last character difference)"""
-    for path in os.listdir(data_dir):
+    """This function takes a test measurement file and filters out the common mac addresses (based on last character difference). Cleanup is also
+    done in this function"""
+    for path in os.listdir(data_dir): # Go trough all test files
 
-        testPoint = pd.read_csv(data_dir+ '/'+ path, names = ["MAC","Rssi"],index_col=False)
-
+        testPoint = pd.read_csv(data_dir+ '/'+ path, names = ["MAC","Rssi"],index_col=False) # get test file into df
+        # discard the last character of the MAC addresses
         for i in range(testPoint.shape[0]): #iterate over rows
             testPoint.iloc[i,0] = testPoint.iloc[i,0][0:-1] #get cell value
-
+        # Drop the duplicate MAC addresses and keep the strongest one
         testPoint.drop_duplicates(subset ="MAC", keep = 'first', inplace = True)
-
         testPoint = testPoint.reset_index(drop = True)  # make sure indexes pair with number of rows
-
+        # Save the test measurement in the same place
         testPoint.to_csv(data_dir + '/'+path, index=False,header= None)
+
 
 def sortMeasurement(dataFile):
     """Sorts the obtained test values and returns it in a pandas dataframe"""
@@ -86,74 +87,70 @@ def calc_posterior(sortedTestPoint, prior):
 
     return posterior
   
-# Set global points 
+# Set testing variables
 parentDirectory = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-day = "Friday"
-date = "may20"
-# dirList = ["random1", "random2", "random3", "random4", "random5"]
-dirList = ["South", "East", "North", "West"]
+days = ['Friday', 'Wednesday']
+day = days[1]
+date = "may25"
+dirList = ["random1", "random2", "random3", "random4", "random5"][:-2]
+# dirList = ["South", "East", "North", "West"]
 cell_number = 15
+# Initialize arrays to hold test results
 good = []
 almost1 = []
 almost2 = []
+wrong = []
 
-# Copy the test data into the working directory, change the first parameter to use other test data
-copy_tree("raw_data/raw_test_data_" + date, "temporary_test_data_for_algorithm")
+# Copy the test data into the working directory, and format the testing data to fit the algorithm
+temp_test_path = "temporary_test_data_for_algorithm"
+copy_tree("raw_data/raw_test_data_" + date, temp_test_path)
+for test_file in os.listdir(temp_test_path):
+    cleanup_csv(temp_test_path+'/'+test_file)
+# Filter the multiple macs in all testing data files
 filterMultipleMACs("temporary_test_data_for_algorithm") # get rid of multiple mac of same access point
 
-number_of_macs_we_want_to_iterate = 10
-posterior_output = [0 for i in range(int(cell_number))]
+number_of_macs_we_want_to_iterate = 12
+
 initial_belief = [1./cell_number for i in range(int(cell_number))]
-posterior = initial_belief
+posterior = initial_belief  # The posterior list will be used initially as initial belief, 
+                            # and both prior and posterior throughout the calculations
+
+# Iterate through all test points for each cell
 for i in range(1,cell_number+1):
+    for dir in dirList:
+        # Iterate through all MACs in a single measurement (The calculations are done in parallel)
+        for macNum in range(number_of_macs_we_want_to_iterate):
 
-    for macNum in range(number_of_macs_we_want_to_iterate):
-        for dir in dirList:
-            # Get the file and create a proper csv file of it
-            path = os.path.join(parentDirectory, "Processing/temporary_test_data_for_algorithm" , "saved_data_celltest" + str(i) + "_" + day + "_" + dir + ".txt")
-            cleanup_csv(path)
+            # Get the file and create an ordered data frame
+            path = os.path.join(parentDirectory, "Processing/temporary_test_data_for_algorithm" , \
+                "saved_data_celltest" + str(i) + "_" + day + "_" + dir + ".txt")
             sortTest = sortMeasurement(path)
-
-            if dir == dirList[0]: # first measurement for a cell
-                posterior = calc_posterior(sortTest, posterior)
-            else:
-                posterior = calc_posterior(sortTest, posterior)
-
-            # Save new test point into temporary file
+            # Calculate the posterior based on the prior, which is the previous posterior.
+            posterior = calc_posterior(sortTest, posterior)
+            # Save new test point (with used mac deleted) into temporary file
             sortTest.to_csv(path, index=False,header= None)
-            
-            # print(f' real cell = {i} and predicted cell = {posterior.index(max(posterior))+1}')
+            # Print the intermediate prediction
+            print(f' real cell = {i} and predicted cell = {posterior.index(max(posterior))+1}')
 
-        # if macNum == 0:
-        #     for index in range(len(posterior_output)):
-        #         posterior_output[index] += posterior[index]*0.5
-        # if macNum == 1:
-        #     for index in range(len(posterior_output)):
-        #         posterior_output[index] += posterior[index]*0.2
-        # if macNum == 2:
-        #     for index in range(len(posterior_output)):
-        #         posterior_output[index] += posterior[index]*0.1
-        # if macNum == 3:
-        #     for index in range(len(posterior_output)):
-        #         posterior_output[index] += posterior[index]*0.1
-        # if macNum == 4:
-        #     for index in range(len(posterior_output)):
-        #         posterior_output[index] += posterior[index]*0.1
-    
-    posterior_output = posterior
-    print(posterior_output)
-    if i == posterior_output.index(max(posterior_output))+1:
+    # Put the prediction result in the corresponding array
+    prediction = posterior.index(max(posterior))
+    if i == prediction+1:
         good.append(i)
-    if i == posterior_output.index(max(posterior_output)) or i == posterior_output.index(max(posterior_output)) + 2:
+    elif i == prediction or i == prediction + 2:
         almost1.append(i)
-    if i == posterior_output.index(max(posterior_output)) -1 or i == posterior_output.index(max(posterior_output)) + 3:
+    elif i == prediction -1 or i == prediction + 3:
         almost2.append(i)
+    else:
+        wrong.append(i)
+    # Reset the posterior to initial belief for the calculations of a new cell
     posterior = initial_belief
 
-print(day)
-print("good",good)
-print("almost1", almost1)
-print("almost2", almost2)
+# Print the testing results
+print(day, date)
+print("#: ",len(good),", good:    ",good)
+print("#: ",len(almost1),", almost-1:", almost1)
+print("#: ",len(almost2),", almost-2:", almost2)
+print("#: ",len(wrong), ", wrong:   ", wrong)
 
 # Clean the temporary files
 # # Empty the directory where the pmfs will be stored
