@@ -38,46 +38,6 @@ for idx, d_ap in enumerate(distinct_ap_list):
         for j in range(1,df1.shape[1]): #iterate over columns
             df1.iloc[i,j] += (df1.iloc[i, j]/counter)#get cell value       
     counter = 0
-    df1.to_csv('newpmfs/'+d_ap+'.csv', index=False,header= None)
+    df1.to_csv('newpmfs/'+d_ap+'.csv', index=False, header= None)
     flag = 1
                 
-
-
-
-
-# dh1.to_csv('lolllllllllll.csv', index=False,header= None)
-
-
-# dh1 = pd.read_csv(data_dir + "00_31_92_60_ee_24.csv",header = None)
-# dh2 = pd.read_csv(data_dir + "1c_28_af_61_e5_c0.csv",header = None)
-
-
-# # for dMac in distinct_ap_list:
-# #     if re.match('1c_28_af_61_df_', file):
-
-
-
-
-# #         print(file[0:-6])
-
-
-
-
-# # for file in os.listdir(data_dir):
-# #     distinct_ap_list
-# #     if re.match('1c_28_af_61_df_', file):
-# #         print(file[0:-6])
-
-# # for index, file in enumerate(os.listdir(data_dir)):
-# #     distinct_ap_list
-# #     if re.match('1c_28_af_61_df_', file):
-# #         print(file[0:-6])
-
-# #Python program to check if two 
-# # to get unique values from list
-# # using numpy.unique 
-
-
-# # df1.combine(df2,np.add)
-  
-

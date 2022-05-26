@@ -1,3 +1,4 @@
+from cgi import test
 import pandas as pd
 import os
 from os.path import exists
@@ -6,6 +7,20 @@ from IPython.display import display
 from distutils.dir_util import copy_tree
 import glob
 
+def filterMultipleMACs(data_dir):
+    """This function takes a test measurement file and filters out the common mac addresses (based on last character difference)"""
+    for path in os.listdir(data_dir):
+
+        testPoint = pd.read_csv(data_dir+ '/'+ path, names = ["MAC","Rssi"],index_col=False)
+
+        for i in range(testPoint.shape[0]): #iterate over rows
+            testPoint.iloc[i,0] = testPoint.iloc[i,0][0:-1] #get cell value
+
+        testPoint.drop_duplicates(subset ="MAC", keep = 'first', inplace = True)
+
+        testPoint = testPoint.reset_index(drop = True)  # make sure indexes pair with number of rows
+
+        testPoint.to_csv(data_dir + '/'+path, index=False,header= None)
 
 def sortMeasurement(dataFile):
     """Sorts the obtained test values and returns it in a pandas dataframe"""
@@ -35,7 +50,7 @@ def calc_posterior(sortedTestPoint, prior):
         posterior   = [0. for i in range(int(cell_number))]
 
         # Get the file of the corresponding MAC 
-        file_name_MAC = "MACpmf/" + StrongestMAC.replace(":","_")[0:-1] + ".csv"
+        file_name_MAC = "MACpmf/" + StrongestMAC.replace(":","_") + ".csv"
 
         #If the file exists use it to update the prior, otherwise look at the next strongest signal map
         if(exists(file_name_MAC)): 
@@ -73,10 +88,10 @@ def calc_posterior(sortedTestPoint, prior):
   
 # Set global points 
 parentDirectory = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-day = "Wednesday"
-date = "may25"
-dirList = ["random1", "random2", "random3", "random4", "random5"]
-# dirList = ["South", "East", "North", "West"]
+day = "Friday"
+date = "may20"
+# dirList = ["random1", "random2", "random3", "random4", "random5"]
+dirList = ["South", "East", "North", "West"]
 cell_number = 15
 good = []
 almost1 = []
@@ -84,19 +99,18 @@ almost2 = []
 
 # Copy the test data into the working directory, change the first parameter to use other test data
 copy_tree("raw_data/raw_test_data_" + date, "temporary_test_data_for_algorithm")
+filterMultipleMACs("temporary_test_data_for_algorithm") # get rid of multiple mac of same access point
 
 number_of_macs_we_want_to_iterate = 10
 posterior_output = [0 for i in range(int(cell_number))]
 initial_belief = [1./cell_number for i in range(int(cell_number))]
 posterior = initial_belief
 for i in range(1,cell_number+1):
-    
 
     for macNum in range(number_of_macs_we_want_to_iterate):
         for dir in dirList:
             # Get the file and create a proper csv file of it
             path = os.path.join(parentDirectory, "Processing/temporary_test_data_for_algorithm" , "saved_data_celltest" + str(i) + "_" + day + "_" + dir + ".txt")
-
             cleanup_csv(path)
             sortTest = sortMeasurement(path)
 
