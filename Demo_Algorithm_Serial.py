@@ -91,9 +91,13 @@ def calc_posterior(sortedTestPoint, prior):
 parentDirectory = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
 days = ['Friday', 'Wednesday']
 day = days[1]
-date = "may25"
-dirList = ["random1", "random2", "random3", "random4", "random5"][:]
+date = "may25-2"
+# dirList = ["random1", "random2", "random3", "random4", "random5"][:]
 # dirList = ["South", "East", "North", "West"]
+dirList = ["East_1","East_2","East_3"][:]
+# dirList = ["West_1","West_2","West_3"][:-1]
+# dirList = ["North_1","North_2","North_3"][:-1]
+# dirList = ["South_1","South_2","South_3"][:-1]
 cell_number = 15
 # Initialize arrays to hold test results
 good = []
@@ -104,12 +108,12 @@ wrong = []
 # Copy the test data into the working directory, and format the testing data to fit the algorithm
 temp_test_path = "temporary_test_data_for_algorithm"
 copy_tree("raw_data/raw_test_data_" + date, temp_test_path)
-for test_file in os.listdir(temp_test_path):
-    cleanup_csv(temp_test_path+'/'+test_file)
+# for test_file in os.listdir(temp_test_path):
+#     cleanup_csv(temp_test_path+'/'+test_file)
 # Filter the multiple macs in all testing data files
 filterMultipleMACs("temporary_test_data_for_algorithm") # get rid of multiple mac of same access point
 
-number_of_macs_we_want_to_iterate = 12
+number_of_macs_we_want_to_iterate = 1
 
 initial_belief = [1./cell_number for i in range(int(cell_number))]
 posterior = initial_belief  # The posterior list will be used initially as initial belief, 
