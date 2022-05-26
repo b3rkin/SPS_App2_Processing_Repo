@@ -1,0 +1,98 @@
+real cell = 1 and predicted cell = 2
+ real cell = 1 and predicted cell = 2
+ real cell = 1 and predicted cell = 2
+ real cell = 1 and predicted cell = 2
+ real cell = 1 and predicted cell = 2
+ real cell = 1 and predicted cell = 2
+ real cell = 2 and predicted cell = 2
+ real cell = 2 and predicted cell = 2
+ real cell = 2 and predicted cell = 2
+ real cell = 2 and predicted cell = 2
+ real cell = 2 and predicted cell = 2
+ real cell = 2 and predicted cell = 2
+ real cell = 3 and predicted cell = 3
+ real cell = 3 and predicted cell = 3
+ real cell = 3 and predicted cell = 3
+ real cell = 3 and predicted cell = 3
+ real cell = 3 and predicted cell = 3
+ real cell = 3 and predicted cell = 3
+ real cell = 4 and predicted cell = 5
+ real cell = 4 and predicted cell = 5
+ real cell = 4 and predicted cell = 5
+ real cell = 4 and predicted cell = 5
+ real cell = 4 and predicted cell = 5
+ real cell = 4 and predicted cell = 5
+ real cell = 5 and predicted cell = 2
+ real cell = 5 and predicted cell = 1
+ real cell = 5 and predicted cell = 1
+ real cell = 5 and predicted cell = 1
+ real cell = 5 and predicted cell = 1
+ real cell = 5 and predicted cell = 1
+ real cell = 6 and predicted cell = 7
+ real cell = 6 and predicted cell = 7
+ real cell = 6 and predicted cell = 7
+ real cell = 6 and predicted cell = 7
+ real cell = 6 and predicted cell = 6
+ real cell = 6 and predicted cell = 6
+ real cell = 7 and predicted cell = 7
+ real cell = 7 and predicted cell = 7
+ real cell = 7 and predicted cell = 10
+ real cell = 7 and predicted cell = 10
+ real cell = 7 and predicted cell = 10
+ real cell = 7 and predicted cell = 10
+ real cell = 8 and predicted cell = 8
+ real cell = 8 and predicted cell = 8
+ real cell = 8 and predicted cell = 8
+ real cell = 8 and predicted cell = 8
+sum = 0
+sum = 0
+sum = 0
+ real cell = 8 and predicted cell = 8
+ real cell = 8 and predicted cell = 8
+ real cell = 9 and predicted cell = 9
+ real cell = 9 and predicted cell = 9
+ real cell = 9 and predicted cell = 9
+ real cell = 9 and predicted cell = 9
+ real cell = 9 and predicted cell = 9
+ real cell = 9 and predicted cell = 9
+ real cell = 10 and predicted cell = 9
+ real cell = 10 and predicted cell = 9
+ real cell = 10 and predicted cell = 9
+ real cell = 10 and predicted cell = 9
+ real cell = 10 and predicted cell = 9
+ real cell = 10 and predicted cell = 9
+ real cell = 11 and predicted cell = 9
+ real cell = 11 and predicted cell = 9
+ real cell = 11 and predicted cell = 6
+ real cell = 11 and predicted cell = 6
+ real cell = 11 and predicted cell = 6
+ real cell = 11 and predicted cell = 6
+ real cell = 12 and predicted cell = 9
+ real cell = 12 and predicted cell = 9
+ real cell = 12 and predicted cell = 9
+ real cell = 12 and predicted cell = 9
+ real cell = 12 and predicted cell = 9
+ real cell = 12 and predicted cell = 9
+ real cell = 13 and predicted cell = 5
+ real cell = 13 and predicted cell = 13
+ real cell = 13 and predicted cell = 5
+ real cell = 13 and predicted cell = 5
+sum = 0
+ real cell = 13 and predicted cell = 5
+ real cell = 13 and predicted cell = 5
+ real cell = 14 and predicted cell = 13
+ real cell = 14 and predicted cell = 14
+ real cell = 14 and predicted cell = 14
+ real cell = 14 and predicted cell = 14
+ real cell = 14 and predicted cell = 14
+ real cell = 14 and predicted cell = 14
+ real cell = 15 and predicted cell = 15
+ real cell = 15 and predicted cell = 15
+ real cell = 15 and predicted cell = 15
+ real cell = 15 and predicted cell = 15
+ real cell = 15 and predicted cell = 15
+ real cell = 15 and predicted cell = 15
+Wednesday
+good [2, 3, 6, 8, 9, 14, 15]
+almost1 [1, 4, 10]
+almost2 []
