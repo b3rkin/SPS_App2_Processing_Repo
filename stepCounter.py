@@ -1,9 +1,6 @@
-from re import L
-import pandas as pd
-import matplotlib.pyplot as plt 
 import numpy as np
-
-sample_size = 1
+import pandas as pd
+import matplotlib.pyplot as plt
 
 def smoothArray(values, smoothing):
     value = values.iloc[0]
@@ -49,19 +46,21 @@ def walkThroughData(data,windowLength):
     return steps
 
 
-file_names = ["saved_dataACC_B20.txt","saved_dataACC_B15.txt","saved_dataACC_B15_2.txt","saved_dataACC_B20_2.txt","saved_dataACC_B20_3.txt"] #,"saved_dataACC_B15_2.txt"]
+# file_names = ["saved_dataACC_B20.txt","saved_dataACC_B15.txt","saved_dataACC_B15_2.txt","saved_dataACC_B20_2.txt","saved_dataACC_B20_3.txt" ,"saved_dataACC_B15_4.txt","saved_dataACC_B15_555.txt","saved_dataACC_B15_105.txt"]
 # Remove all square brackets
+file_names = ["saved_dataACC_M16.txt","saved_dataACC_M15N_4E.txt","saved_dataACC_M15W_4ishE.txt"]#"saved_dataACC_B15_4.txt","saved_dataACC_B15_555.txt","saved_dataACC_B15_105.txt"]
+
 
 for i in range(len(file_names)):
-    with open(file_names[i], 'r') as my_file:
+    with open("ACCdata/" + file_names[i], 'r') as my_file:
         text = my_file.read()
         text = text.replace("[", "")
         text = text.replace("]", ",")
-    with open(file_names[i], 'w') as my_file:
+    with open("ACCdata/" + file_names[i], 'w') as my_file:
         my_file.write(text)
 
 
-    df = pd.read_csv(file_names[i])
+    df = pd.read_csv("ACCdata/" + file_names[i])
     df = df.iloc[: , :-1]
 
     dfz = df["z"]
