@@ -91,13 +91,13 @@ def calc_posterior(sortedTestPoint, prior):
 parentDirectory = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
 days = ['Friday', 'Wednesday']
 day = days[1]
-date = "may25"
-dirList = ["random1", "random2", "random3", "random4", "random5"][:]
+date = "may25-2"
+# dirList = ["random1", "random2", "random3", "random4", "random5"][:]
 # dirList = ["South", "East", "North", "West"]
 # dirList = ["East_1","East_2","East_3"][:]
 # dirList = ["West_1","West_2","West_3"][:]
 # dirList = ["North_1","North_2","North_3"][:]
-# dirList = ["South_1","South_2","South_3"][:]
+dirList = ["South_1","South_2","South_3"][:]
 cell_number = 15
 # Initialize arrays to hold test results
 good = []
